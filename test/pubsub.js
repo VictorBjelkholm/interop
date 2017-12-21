@@ -10,6 +10,7 @@ const series = require('async/series')
 const parallel = require('async/parallel')
 
 const DaemonFactory = require('ipfsd-ctl')
+const df = DaemonFactory.create()
 
 /*
  * Wait for a condition to become true.  When its true, callback is called.
@@ -41,8 +42,8 @@ describe('pubsub', function () {
     this.timeout(50 * 1000)
 
     parallel([
-      (cb) => DaemonFactory.create().spawn({ args: ['--enable-pubsub-experiment'] }, cb),
-      (cb) => DaemonFactory.create({ type: 'js' }).spawn({ args: ['--enable-pubsub-experiment'] }, cb)
+      (cb) => df.spawn({ args: ['--enable-pubsub-experiment'] }, cb),
+      (cb) => df.spawn({ type: 'js', args: ['--enable-pubsub-experiment'] }, cb)
     ], (err, n) => {
       expect(err).to.not.exist()
       nodes = n
