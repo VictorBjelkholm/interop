@@ -60,7 +60,13 @@ describe('repo', () => {
       (cb) => df.spawn({
         type: 'js',
         repoPath: dir,
-        disposable: false
+        disposable: false,
+        config: {
+          Addresses: {
+            API: '/ipv4/0.0.0.0/tcp/0',
+            Gateway: '/ipv4/0.0.0.0/tcp/0'
+          }
+        }
       }, (err, node) => {
         expect(err).to.not.exist()
         jsDaemon = node
