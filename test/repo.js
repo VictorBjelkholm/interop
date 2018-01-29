@@ -41,7 +41,10 @@ describe('repo', () => {
         config: {
           Addresses: {
             API: '/ip4/0.0.0.0/tcp/0',
-            Gateway: '/ip4/0.0.0.0/tcp/0'
+            Gateway: '/ip4/0.0.0.0/tcp/0',
+            Swarm: [
+              '/ip4/0.0.0.0/tcp/0'
+            ]
           }
         }
       }, (err, node) => {
@@ -64,7 +67,10 @@ describe('repo', () => {
         config: {
           Addresses: {
             API: '/ip4/0.0.0.0/tcp/0',
-            Gateway: '/ip4/0.0.0.0/tcp/0'
+            Gateway: '/ip4/0.0.0.0/tcp/0',
+            Swarm: [
+              '/ip4/0.0.0.0/tcp/0'
+            ]
           }
         }
       }, (err, node) => {
