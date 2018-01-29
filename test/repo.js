@@ -12,6 +12,8 @@ const os = require('os')
 const path = require('path')
 const hat = require('hat')
 
+const isWindows = os.platform() === 'win32'
+
 const DaemonFactory = require('ipfsd-ctl')
 const df = DaemonFactory.create()
 
@@ -24,6 +26,11 @@ function catAndCheck (api, hash, data, callback) {
 }
 
 describe('repo', () => {
+  // skipping until https://github.com/ipfs/interop/issues/8 is addressed
+  if (isWindows) {
+    return
+  }
+
   it('read repo: go -> js', function (done) {
     this.timeout(50 * 1000)
 
@@ -63,16 +70,7 @@ describe('repo', () => {
       (cb) => df.spawn({
         type: 'js',
         repoPath: dir,
-        disposable: false,
-        config: {
-          Addresses: {
-            API: '/ip4/0.0.0.0/tcp/0',
-            Gateway: '/ip4/0.0.0.0/tcp/0',
-            Swarm: [
-              '/ip4/0.0.0.0/tcp/0'
-            ]
-          }
-        }
+        disposable: false
       }, (err, node) => {
         expect(err).to.not.exist()
         jsDaemon = node
