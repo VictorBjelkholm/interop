@@ -428,7 +428,7 @@ describe('circuit', () => {
         })
       })
 
-      describe(`go <-> js relay <-> browser`, function () {
+      describe.skip(`go <-> js relay <-> browser`, function () {
         // this.timeout(100 * 1000)
 
         let nodeA
