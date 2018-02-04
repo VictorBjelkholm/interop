@@ -16,7 +16,7 @@ module.exports = {
       included: false
     }],
     singleRun: true,
-    browserNoActivityTimeout: 200 * 1000
+    browserNoActivityTimeout: 500 * 1000
   },
   hooks: {
     pre: (done) => {
