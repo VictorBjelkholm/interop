@@ -16,14 +16,17 @@ module.exports = {
       included: false
     }],
     singleRun: true,
-    browserNoActivityTimeout: 500 * 1000
+    captureTimeout: 500 * 1000,
+    // browserDisconnectTolerance: 3, //this one helps
+    browserDisconnectTimeout: 500 * 1000,
+    browserNoActivityTimeout: 500 * 1000,
   },
   hooks: {
     pre: (done) => {
       parallel([
         (cb) => server.start(cb),
         (cb) => {
-          rendezvous.start({ port: 24642 }, (err, _rzserver) => {
+          rendezvous.start({port: 24642}, (err, _rzserver) => {
             if (err) {
               return done(err)
             }
