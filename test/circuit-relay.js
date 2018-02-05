@@ -122,7 +122,7 @@ const wsAddr = (addrs) => addrs.map((a) => a.toString())
 const wsStarAddr = (addrs) => addrs.map((a) => a.toString()).find((a) => a.includes('/p2p-websocket-star'))
 const tcpAddr = (addrs) => addrs.map((a) => a.toString()).find((a) => !a.includes('/ws'))
 
-function tests(relay, parseAddrA, parseAddrB) {
+function tests (relay, parseAddrA, parseAddrB) {
   describe(`js <-> ${relay} relay <-> go`, function () {
     // this.timeout(80 * 1000)
 
