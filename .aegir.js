@@ -16,10 +16,10 @@ module.exports = {
       included: false
     }],
     singleRun: true,
-    captureTimeout: 500 * 1000,
+    captureTimeout: 5000 * 1000,
     // browserDisconnectTolerance: 3, //this one helps
-    browserDisconnectTimeout: 500 * 1000,
-    browserNoActivityTimeout: 500 * 1000,
+    browserDisconnectTimeout: 5000 * 1000,
+    browserNoActivityTimeout: 5000 * 1000,
   },
   hooks: {
     pre: (done) => {

@@ -17,9 +17,9 @@ const IPFS = require('ipfs')
 const isNode = require('detect-node')
 
 const DaemonFactory = require('ipfsd-ctl')
-const jsDf = DaemonFactory.create({type: 'js'})
-const goDf = DaemonFactory.create({type: 'go'})
-const procDf = DaemonFactory.create({type: 'proc', exec: IPFS})
+const jsDf = DaemonFactory.create({ type: 'js' })
+const goDf = DaemonFactory.create({ type: 'go' })
+const procDf = DaemonFactory.create({ type: 'proc', exec: IPFS })
 
 const baseConf = {
   Bootstrap: [],
@@ -60,7 +60,7 @@ const setUpInProcNode = (addrs, hop, callback) => {
   }, (err, ipfsd) => {
     expect(err).to.not.exist()
     ipfsd.api.id((err, id) => {
-      callback(err, {ipfsd, addrs: id.addresses})
+      callback(err, { ipfsd, addrs: id.addresses })
     })
   })
 }
@@ -88,7 +88,7 @@ const setUpJsNode = (addrs, hop, callback) => {
   }, (err, ipfsd) => {
     expect(err).to.not.exist()
     ipfsd.api.id((err, id) => {
-      callback(err, {ipfsd, addrs: id.addresses})
+      callback(err, { ipfsd, addrs: id.addresses })
     })
   })
 }
@@ -112,7 +112,7 @@ const setUpGoNode = (addrs, hop, callback) => {
   }, (err, ipfsd) => {
     expect(err).to.not.exist()
     ipfsd.api.id((err, id) => {
-      callback(err, {ipfsd, addrs: id.addresses})
+      callback(err, { ipfsd, addrs: id.addresses })
     })
   })
 }
@@ -122,7 +122,7 @@ const wsAddr = (addrs) => addrs.map((a) => a.toString())
 const wsStarAddr = (addrs) => addrs.map((a) => a.toString()).find((a) => a.includes('/p2p-websocket-star'))
 const tcpAddr = (addrs) => addrs.map((a) => a.toString()).find((a) => !a.includes('/ws'))
 
-function tests (relay, parseAddrA, parseAddrB) {
+function reusableTests (relay, parseAddrA, parseAddrB) {
   describe(`js <-> ${relay} relay <-> go`, function () {
     // this.timeout(80 * 1000)
 
@@ -368,7 +368,7 @@ describe('circuit', () => {
       this.relay.stop(done)
     })
 
-    tests('js', tcpAddr, wsAddr)
+    reusableTests('js', tcpAddr, wsAddr)
 
     describe(`js browser`, function () {
       if (isNode) {
@@ -560,7 +560,7 @@ describe('circuit', () => {
       this.relay.stop(done)
     })
 
-    tests('go', tcpAddr, wsAddr)
+    reusableTests('go', tcpAddr, wsAddr)
 
     describe(`go browser`, function () {
       if (isNode) {
@@ -720,6 +720,8 @@ describe('circuit', () => {
   })
 
   describe('browser relay', function () {
+    if (isNode) { return }
+
     this.relay = null
     this.relayAddrs = null
 
@@ -741,13 +743,9 @@ describe('circuit', () => {
       this.relay.stop(done)
     })
 
-    tests('browser', wsAddr, wsAddr)
+    reusableTests('browser', wsAddr, wsAddr)
 
     describe(`browser`, function () {
-      if (isNode) {
-        return
-      }
-
       describe(`js <-> browser relay <-> browser`, function () {
         // this.timeout(100 * 1000)
 
